@@ -152,111 +152,67 @@ class DysonLinkAccessory {
         this.fan.getCharacteristic(Characteristic.FilterLifeLevel)
             .on("get", this.device.getFilterLife.bind(this.device));
 
-        // Set Heat 
-        if (this.device.heatAvailable) {
-            this.log("Heat Available. Add Heat button and jet control");
-            this.heater = this.getService(Service.HeaterCooler);
+        this.log("Heat Available. Add Heat button and jet control");
+        this.heater = this.getService(Service.HeaterCooler);
 
-            this.heater.getCharacteristic(Characteristic.Active)
-                .on("get", this.device.isFanOn.bind(this.device))
-                .on("set", this.device.setHeaterOn.bind(this.device));
+        this.heater.getCharacteristic(Characteristic.Active)
+            .on("get", this.device.isFanOn.bind(this.device))
+            .on("set", this.device.setHeaterOn.bind(this.device));
 
-            this.heater.getCharacteristic(Characteristic.CurrentHeaterCoolerState)
-                .on("set", this.device.setCurrentHeaterCoolerState.bind(this.device))
-                .on("get", this.device.getCurrentHeaterCoolerState.bind(this.device));
+        this.heater.getCharacteristic(Characteristic.CurrentHeaterCoolerState)
+            .on("set", this.device.setCurrentHeaterCoolerState.bind(this.device))
+            .on("get", this.device.getCurrentHeaterCoolerState.bind(this.device));
 
-            if (this.device.model === '527') {
-                this.heater.getCharacteristic(Characteristic.TargetHeaterCoolerState)
-                    .on("get", this.device.getHeaterCoolerState.bind(this.device))
-                    .on("set", this.device.setHeaterCoolerState.bind(this.device))
-                    .setProps({
-                        // Disable COOL and AUTO, leave only HEAT
-                        validValues: [1],
-                    });
-            } else {
-                this.heater.getCharacteristic(Characteristic.TargetHeaterCoolerState)
-                    .on("get", this.device.getHeaterCoolerState.bind(this.device))
-                    .on("set", this.device.setHeaterCoolerState.bind(this.device));
-            }
+        this.heater.getCharacteristic(Characteristic.TargetHeaterCoolerState)
+            .on("get", this.device.getHeaterCoolerState.bind(this.device))
+            .on("set", this.device.setHeaterCoolerState.bind(this.device));
 
-            this.heater.getCharacteristic(Characteristic.CurrentTemperature)
-                .on("get", this.device.getTemperture.bind(this.device));
+        this.heater.getCharacteristic(Characteristic.CurrentTemperature)
+            .on("get", this.device.getTemperture.bind(this.device));
 
-            this.heater.getCharacteristic(Characteristic.HeatingThresholdTemperature)
-                .on("set", this.device.setThresholdTemperture.bind(this.device))
-                .on("get", this.device.getThresholdTemperture.bind(this.device))
-                .setProps({ minValue: 1, maxValue: 38, unit: "celsius" })
+        this.heater.getCharacteristic(Characteristic.HeatingThresholdTemperature)
+            .on("set", this.device.setThresholdTemperture.bind(this.device))
+            .on("get", this.device.getThresholdTemperture.bind(this.device))
+            .setProps({ minValue: 1, maxValue: 38, unit: "celsius" })
 
-            var heatSwitch = this.accessory.getServiceByUUIDAndSubType(Service.Switch, "Heat");
-            if(heatSwitch) {
-                this.log("Heat switch found. Remove this now and replace with heater");
-                this.accessory.removeService(heatSwitch);
-            }
-            // this.heatSwitch = this.getServiceBySubtype(Service.Switch, "Heat - " + this.displayName, "Heat");
-            // this.heatSwitch
-            //     .getCharacteristic(Characteristic.On)
-            //     .on("get", this.device.isHeatOn.bind(this.device))
-            //     .on("set", this.device.setHeatOn.bind(this.device));
-
-
-            
-            
-            // Set the auto/manual mode in the FanV2 just for Cool/Heat device as it seemed to be problem for cool device
-            // Removed this for now as FanV2 is not working for this
-            // this.fan.getCharacteristic(Characteristic.TargetFanState)
-            //     .setValue(0)
-            //     .on("get", this.device.isFanAuto.bind(this.device))
-            //     .on("set", this.device.setFanAuto.bind(this.device));
-            // Remove the auto/manual characteristic from FanV2 and use button instead to workaround the existing issue
-            var targetFanCharacteristic = this.fan.getCharacteristic(Characteristic.TargetFanState);
-            if(targetFanCharacteristic){
-                this.fan.removeCharacteristic(targetFanCharacteristic);
-            }
-
-            this.autoSwitch = this.getServiceBySubtype(Service.Switch, "Auto - " + this.displayName, "Auto");
-            
-            this.autoSwitch
-                .getCharacteristic(Characteristic.On)
-                .on("get", this.device.isFanAuto.bind(this.device))
-                .on("set", this.device.setFanAuto.bind(this.device));
-}
-        else{
-
-            // Remove the auto/manual characteristic from FanV2 and use button instead to workaround the existing issue
-            var targetFanCharacteristic = this.fan.getCharacteristic(Characteristic.TargetFanState);
-            if(targetFanCharacteristic){
-                this.fan.removeCharacteristic(targetFanCharacteristic);
-            }
-
-            if (this.autoModeVisible) {
-                this.autoSwitch = this.getServiceBySubtype(Service.Switch, "Auto - " + this.displayName, "Auto");
-                this.autoSwitch
-                    .getCharacteristic(Characteristic.On)
-                    .on("get", this.device.isFanAuto.bind(this.device))
-                    .on("set", this.device.setFanAuto.bind(this.device));
-            }
-            
+        var heatSwitch = this.accessory.getServiceByUUIDAndSubType(Service.Switch, "Heat");
+        if (heatSwitch) {
+            this.log("Heat switch found. Remove this now and replace with heater");
+            this.accessory.removeService(heatSwitch);
+        }
+        
+        // Set the auto/manual mode in the FanV2 just for Cool/Heat device as it seemed to be problem for cool device
+        // Removed this for now as FanV2 is not working for this
+        // this.fan.getCharacteristic(Characteristic.TargetFanState)
+        //     .setValue(0)
+        //     .on("get", this.device.isFanAuto.bind(this.device))
+        //     .on("set", this.device.setFanAuto.bind(this.device));
+        // Remove the auto/manual characteristic from FanV2 and use button instead to workaround the existing issue
+        var targetFanCharacteristic = this.fan.getCharacteristic(Characteristic.TargetFanState);
+        if (targetFanCharacteristic) {
+            this.fan.removeCharacteristic(targetFanCharacteristic);
         }
 
-        // Add jet focus for Cool/Heat and 2018 Cool device
-        if((this.device.heatAvailable && this.device.model !== '527') || this.device.Is2018Dyson) {
+        this.autoSwitch = this.getServiceBySubtype(Service.Switch, "Auto - " + this.displayName, "Auto");
+        
+        this.autoSwitch.getCharacteristic(Characteristic.On)
+            .on("get", this.device.isFanAuto.bind(this.device))
+            .on("set", this.device.setFanAuto.bind(this.device));
 
-            if(this.focusModeVisible) {
-                this.log.info("Jet Focus mode button is added");
-                this.focusSwitch = this.getServiceBySubtype(Service.Switch, "Jet Focus - " + this.displayName, "Jet Focus");
-                
-                this.focusSwitch
-                    .getCharacteristic(Characteristic.On)
-                    .on("get", this.device.isFocusedJet.bind(this.device))
-                    .on("set", this.device.setFocusedJet.bind(this.device));
+        if (this.focusModeVisible) {
+            this.log.info("Jet Focus mode button is added");
+            this.focusSwitch = this.getServiceBySubtype(Service.Switch, "Jet Focus - " + this.displayName, "Jet Focus");
+            
+            this.focusSwitch
+                .getCharacteristic(Characteristic.On)
+                .on("get", this.device.isFocusedJet.bind(this.device))
+                .on("set", this.device.setFocusedJet.bind(this.device));
 
-            }
-            else {
-                this.log.info("Jet Focus mode button is hidden");
-                let focusSwtich = this.accessory.getServiceByUUIDAndSubType(Service.Switch, "Jet Focus");
-                if(focusSwtich){
-                    this.accessory.removeService(focusSwtich);
-                }
+        } else {
+            this.log.info("Jet Focus mode button is hidden");
+            let focusSwtich = this.accessory.getServiceByUUIDAndSubType(Service.Switch, "Jet Focus");
+            if(focusSwtich){
+                this.accessory.removeService(focusSwtich);
             }
         }
     }
