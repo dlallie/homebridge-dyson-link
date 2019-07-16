@@ -77,6 +77,7 @@ class DysonLinkDevice {
                         this.log.info("STATE-CHANGE detected, request update - " + this.displayName);
                         this.fanState.updateState(result);
                         this.requestForCurrentUpdate();
+                        this.mqttEvent.emit(this.STATE_EVENT);
                         break;
                 }
             });
