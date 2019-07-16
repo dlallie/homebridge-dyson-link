@@ -28,7 +28,7 @@ class DysonFanState {
         this._rotate = this.getFieldValue(newState, "oson") === "ON";
         this._nightMode = this.getFieldValue(newState, "nmod") === "ON";        
         this._speed = (Number.parseInt(this.getFieldValue(newState, "fnsp"))||5) * 10;
-        
+
         if (this.heatAvailable) {
             this._heat = this.getFieldValue(newState, "hmod") === "HEAT";
             this._focus = this.getFieldValue(newState, "ffoc") === "ON";
