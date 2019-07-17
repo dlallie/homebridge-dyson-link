@@ -53,6 +53,8 @@ class DysonLinkAccessory {
             .getCharacteristic(Characteristic.AirQuality)
             .on("get", this.device.getAirQuality.bind(this.device));
 
+        temp = this.getService(Service.Temperature);
+        this.accessory.removeService(temp)
 
         if (this.device.model == "438" || this.device.model == "520" || this.device.model == "527") {
             this.airSensor.getCharacteristic(Characteristic.PM2_5Density)
