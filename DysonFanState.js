@@ -74,7 +74,9 @@ class DysonFanState {
             this._currentHeaterCoolerState = 2;            
             this._targetHeaterCoolerState = 1;
         }
-        if(this._auto) {
+
+        if (!this._fan) {
+            this._currentHeaterCoolerState = 0;            
             this._targetHeaterCoolerState = 0;
         }
     }
