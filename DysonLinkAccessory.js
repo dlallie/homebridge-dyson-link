@@ -164,12 +164,12 @@ class DysonLinkAccessory {
         this.heater.getCharacteristic(Characteristic.CurrentHeaterCoolerState)
             .on("set", this.device.setCurrentHeaterCoolerState.bind(this.device))
             .on("get", this.device.getCurrentHeaterCoolerState.bind(this.device))
-            .setProps({ validValues: [0,2,3] });
+            .setProps({ validValues: [1,2,3] });
 
         this.heater.getCharacteristic(Characteristic.TargetHeaterCoolerState)
             .on("get", this.device.getHeaterCoolerState.bind(this.device))
             .on("set", this.device.setHeaterCoolerState.bind(this.device))
-            .setProps({ validValues: [0,2,3] });
+            .setProps({ validValues: [1,2,3] });
 
         this.heater.getCharacteristic(Characteristic.CurrentTemperature)
             .on("get", this.device.getTemperture.bind(this.device));
