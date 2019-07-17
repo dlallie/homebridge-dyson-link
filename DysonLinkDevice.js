@@ -91,7 +91,7 @@ class DysonLinkDevice {
         let fanlistenerCount = this.mqttEvent.listenerCount(this.STATE_EVENT);
         this.log("Number of listeners - sensor:"+ senorlistenerCount + " fan:" + fanlistenerCount);
         let tooManyListener = senorlistenerCount > 4 || fanlistenerCount >10;
-        if((senorlistenerCount <=1 && fanlistenerCount <=1) || tooManyListener) {
+        //if((senorlistenerCount <=1 && fanlistenerCount <=1) || tooManyListener) {
             this.log("Request for current state update");
             if (tooManyListener) {
                 this.log("Too many listerner. Do another publish now");
@@ -107,7 +107,7 @@ class DysonLinkDevice {
             else{
                 this.log("Client is NOT connected. Skip publishing.");
             }
-        }
+        //}
     }
 
     setState(state) {
