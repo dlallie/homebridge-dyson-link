@@ -54,7 +54,6 @@ class DysonLinkAccessory {
             .on("get", this.device.getAirQuality.bind(this.device));
 
         this.temperatureSensor = this.getService(Service.TemperatureSensor);
-        this.log("Temp sensor: " + this.temperatureSensor.toString());
         this.accessory.removeService(this.temperatureSensor);
 
         if (this.device.model == "438" || this.device.model == "520" || this.device.model == "527") {
@@ -178,6 +177,9 @@ class DysonLinkAccessory {
             .on("get", this.device.getThresholdTemperture.bind(this.device))
             .setProps({ minValue: 1, maxValue: 38, unit: "celsius" })
 
+        this.heater.getCharacteristic(Characteristic.CoolingThresholdTemperature)
+            .setValue(0.0)
+
         var heatSwitch = this.accessory.getServiceByUUIDAndSubType(Service.Switch, "Heat");
         if (heatSwitch) {
             this.log("Heat switch found. Remove this now and replace with heater");
@@ -228,10 +230,9 @@ class DysonLinkAccessory {
         this.fan.getCharacteristic(Characteristic.FilterChangeIndication).updateValue(this.device.fanState.filterChangeRequired)
         this.fan.getCharacteristic(Characteristic.FilterLifeLevel).updateValue(this.device.fanState.filterLife)
 
-        this.heater.getCharacteristic(Characteristic.Active).updateValue(this.device.fanState.fanHeat)
+        this.heater.getCharacteristic(Characteristic.Active).updateValue(this.device.fanState.heaterCoolerState > 1)
         this.heater.getCharacteristic(Characteristic.CurrentHeaterCoolerState).updateValue(this.device.fanState.heaterCoolerState)
         this.heater.getCharacteristic(Characteristic.TargetHeaterCoolerState).updateValue(this.device.fanState.targetHeaterCoolerState)
-        this.log.info("Heat target: " + this.device.fanState.heatThreshold.toString());
         this.heater.getCharacteristic(Characteristic.HeatingThresholdTemperature).updateValue(this.device.fanState.heatThreshold)
         this.heater.getCharacteristic(Characteristic.CurrentTemperature).updateValue(this.device.environment.temperature)
 

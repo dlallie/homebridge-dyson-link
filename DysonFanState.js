@@ -83,7 +83,7 @@ class DysonFanState {
     get fanAuto() {return this._auto;}
     get fanRotate() {return this._rotate;}
     get fanSpeed() {return this._speed;}
-    get fanHeat() {return this._heat && this._fan;}
+    get fanHeat() {return this._heat;}
     get fanState() {return this._fanState;}
     get nightMode() {return this._nightMode;}
     get fanFocused() {return this._focus && this._fan;}
