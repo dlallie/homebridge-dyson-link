@@ -217,6 +217,10 @@ class DysonLinkAccessory {
         }
     }
 
+    triggerRefresh() {
+        this.fan.getCharacteristic(Characteristic.Active).updateValue(this.device.fanState.fanOn())
+    }
+
     getService(serviceType) {
         let service = this.accessory.getService(serviceType);
         if (!service) {
