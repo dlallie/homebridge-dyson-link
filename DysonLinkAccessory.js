@@ -218,6 +218,7 @@ class DysonLinkAccessory {
     }
 
     triggerRefresh() {
+        this.log.info("Refresh start");
         this.fan.getCharacteristic(Characteristic.Active).updateValue(this.device.fanState.fanOn)
         this.fan.getCharacteristic(Characteristic.RotationSpeed).updateValue(this.device.fanState.fanSpeed)
         this.fan.getCharacteristic(Characteristic.SwingMode).updateValue(this.device.fanState.fanRotate)
@@ -227,6 +228,8 @@ class DysonLinkAccessory {
         this.heater.getCharacteristic(Characteristic.Active).updateValue(this.device.fanState.fanHeat)
         this.heater.getCharacteristic(Characteristic.CurrentHeaterCoolerState).updateValue(this.device.fanState.heaterCoolerState)
         this.heater.getCharacteristic(Characteristic.TargetHeaterCoolerState).updateValue(this.device.fanState.targetHeaterCoolerState)
+        this.log.info("Heat target: " + this.device.fanState.heatThreshold.toString());
+        this.heater.getCharacteristic(Characteristic.HeatingThresholdTemperature).updateValue(this.device.fanState.heatThreshold)
         this.heater.getCharacteristic(Characteristic.CurrentTemperature).updateValue(this.device.environment.temperature)
 
         this.autoSwitch.getCharacteristic(Characteristic.On).updateValue(this.device.fanState.fanAuto)
