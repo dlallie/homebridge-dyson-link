@@ -1,14 +1,14 @@
 {
   "name": "homebridge-dyson-link",
-  "version": "2.4.0",
-  "description": "Homebridge Plugin for Dyson Link",
+  "version": "5.0.0",
+  "description": "Custom Homebridge Plugin for Dyson Link",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joe-ng/homebridge-dyson-link.git"
+    "url": "git+https://github.com/dlallie/homebridge-dyson-link.git"
   },
   "keywords": [
     "homebridge-plugin",
@@ -18,12 +18,12 @@
     "node": ">=8.0.0",
     "homebridge": ">=0.4.0"
   },
-  "author": "joe-ng",
+  "author": "dlallie",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/joe-ng/homebridge-dyson-link/issues"
+    "url": "https://github.com/dlallie/homebridge-dyson-link/issues"
   },
-  "homepage": "https://github.com/joe-ng/homebridge-dyson-link#readme",
+  "homepage": "https://github.com/dlallie/homebridge-dyson-link#readme",
   "dependencies": {
     "mqtt": "~> 2.15.0"
   }
