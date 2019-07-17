@@ -89,7 +89,7 @@ class DysonLinkDevice {
         // OR when there are too many listeners (that might suggest that the previous calls were lost for some reason)
         let senorlistenerCount = this.environmentEvent.listenerCount(this.SENSOR_EVENT);
         let fanlistenerCount = this.mqttEvent.listenerCount(this.STATE_EVENT);
-        this.log.debug("Number of listeners - sensor:"+ senorlistenerCount + " fan:" + fanlistenerCount);
+        this.log("Number of listeners - sensor:"+ senorlistenerCount + " fan:" + fanlistenerCount);
         let tooManyListener = senorlistenerCount > 4 || fanlistenerCount >10;
         if((senorlistenerCount <=1 && fanlistenerCount <=1) || tooManyListener) {
             this.log("Request for current state update");
