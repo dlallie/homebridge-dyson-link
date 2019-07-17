@@ -33,6 +33,9 @@ class DysonFanState {
             this._heat = this.getFieldValue(newState, "hmod") === "HEAT";
             this._focus = this.getFieldValue(newState, "ffoc") === "ON";
             this._heatThreshold = Number.parseFloat(this.getFieldValue(newState, "hmax")) /10 - 273;
+
+            if (this._heatThreshold === null)
+                this._heatThreshold = 0.0;
         } 
 
         if (this.is2018Dyson) {

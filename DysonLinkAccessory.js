@@ -219,6 +219,21 @@ class DysonLinkAccessory {
 
     triggerRefresh() {
         this.fan.getCharacteristic(Characteristic.Active).updateValue(this.device.fanState.fanOn)
+        this.fan.getCharacteristic(Characteristic.RotationSpeed).updateValue(this.device.fanState.fanSpeed)
+        this.fan.getCharacteristic(Characteristic.SwingMode).updateValue(this.device.fanState.fanRotate)
+        this.fan.getCharacteristic(Characteristic.FilterChangeIndication).updateValue(this.device.fanState.filterChangeRequired)
+        this.fan.getCharacteristic(Characteristic.FilterLifeLevel).updateValue(this.device.fanState.filterLife)
+
+        this.heater.getCharacteristic(Characteristic.Active).updateValue(this.device.fanState.fanHeat)
+        this.heater.getCharacteristic(Characteristic.CurrentHeaterCoolerState).updateValue(this.device.fanState.heaterCoolerState)
+        this.heater.getCharacteristic(Characteristic.TargetHeaterCoolerState).updateValue(this.device.fanState.targetHeaterCoolerState)
+        this.heater.getCharacteristic(Characteristic.CurrentTemperature).updateValue(this.device.environment.temperature)
+
+        this.autoSwitch.getCharacteristic(Characteristic.On).updateValue(this.device.fanState.fanAuto)
+        this.focusSwitch.getCharacteristic(Characteristic.On).updateValue(this.device.fanState.fanFocused)
+
+        this.humiditySensor.getCharacteristic(Characteristic.CurrentRelativeHumidity).updateValue(this.device.environment.humidity)
+        this.airSensor.getCharacteristic(Characteristic.AirQuality).updateValue(this.device.environment.airQuality)
     }
 
     getService(serviceType) {
